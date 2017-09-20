@@ -4,12 +4,11 @@ cd "$(dirname $0)"
 
 source "../libs/ColorEcho.bash"
 
-arr=$(perl ../xmlFormatter.pl ../examples/dummy.xml | \
-  grep -o "=" | awk '{ print length }')
-for i in ${arr}; do
-  if [[ $i -ge 2 ]]; then
-    echo.Red Test failed
-    exit 1
-  fi
-done
-echo.Yellow Test passed
+Fail=$(perl ../xmlFormatter.pl ../examples/dummy.xml | \
+  grep -o "=" | awk '{ if(length >= 2) print "Failed" }')
+
+if [[ $Fail ]]; then
+	echo.Red Test failed
+else
+	echo.Yellow Test passed
+fi

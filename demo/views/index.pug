@@ -1,0 +1,13 @@
+extends layout
+
+block content
+	.terminal
+		p.terminal--output CSS3 is awesome!
+
+	script.
+		var socket = io();
+		var container = $('.terminal')
+		socket.on('stdout', function(msg)	{
+			container.append( $("<p class='terminal--output'>" + msg + "</p>") );
+			container.scrollTop( container[0].scrollHeight );
+		});
